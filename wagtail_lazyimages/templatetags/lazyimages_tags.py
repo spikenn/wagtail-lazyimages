@@ -54,7 +54,7 @@ class LazyImageNode(ImageNode):
         if not image:
             return ""
 
-        rendition = get_rendition_or_not_found(image, self.filter)
+        rendition = get_rendition_or_not_found(image, self.get_filter())
         rendition.lazy_url = _get_placeholder_url(rendition)
 
         lazy_attr = str(self.attrs.pop("lazy_attr", '"data-src"'))[1:-1]
@@ -77,7 +77,7 @@ def lazy_image(parser, token):
     node = image(parser, token)
     return LazyImageNode(
         node.image_expr,
-        node.filter_spec,
+        node.filter_specs,
         attrs=node.attrs,
         output_var_name=node.output_var_name,
     )
